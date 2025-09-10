@@ -1,0 +1,234 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/vendor-eval.schema.json",
+    "title": "Vendor Evaluation Dataset",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "vendors": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Vendor"
+            },
+            "uniqueItems": true
+        },
+        "criteriaCategories": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/CriteriaCategory"
+            },
+            "uniqueItems": true
+        },
+        "criteria": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Criteria"
+            },
+            "uniqueItems": true
+        },
+        "responses": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Response"
+            },
+            "uniqueItems": true
+        },
+        "costs": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Cost"
+            },
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "vendors",
+        "criteriaCategories",
+        "criteria",
+        "responses",
+        "costs"
+    ],
+    "$defs": {
+        "SerialID": {
+            "type": "integer",
+            "minimum": 1,
+            "examples": [
+                1,
+                2,
+                3
+            ]
+        },
+        "CategoryName": {
+            "type": "string",
+            "enum": [
+                "schedule",
+                "expertise",
+                "risk",
+                "solution",
+                "training",
+                "support",
+                "quality assurance",
+                "compliance",
+                "testing",
+                "technical data and software rights"
+            ]
+        },
+        "CriteriaNameByCategory": {
+            "$comment": "Optional helper enums for category-specific criteria",
+            "type": "object",
+            "properties": {
+                "schedule": {
+                    "type": "string",
+                    "enum": [
+                        "duration",
+                        "milestones"
+                    ]
+                },
+                "solution": {
+                    "type": "string",
+                    "enum": [
+                        "architecture",
+                        "data services",
+                        "user experience",
+                        "integration",
+                        "intelligence"
+                    ]
+                },
+                "quality assurance": {
+                    "type": "string",
+                    "enum": [
+                        "availability"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "Money": {
+            "type": "number",
+            "minimum": 0
+        },
+        "Weight": {
+            "type": "number",
+            "minimum": 0
+        },
+        "Vendor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/SerialID"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ]
+        },
+        "CriteriaCategory": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/SerialID"
+                },
+                "name": {
+                    "$ref": "#/$defs/CategoryName"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ]
+        },
+        "Criteria": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/SerialID"
+                },
+                "category_id": {
+                    "$ref": "#/$defs/SerialID",
+                    "$comment": "FK -> CriteriaCategory.id"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "goal": {
+                    "type": "string",
+                    "enum": [
+                        "lowest",
+                        "highest"
+                    ]
+                },
+                "weight": {
+                    "$ref": "#/$defs/Weight"
+                }
+            },
+            "required": [
+                "id",
+                "category_id",
+                "name",
+                "goal",
+                "weight"
+            ]
+        },
+        "Response": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/SerialID"
+                },
+                "criteria_id": {
+                    "$ref": "#/$defs/SerialID",
+                    "$comment": "FK -> Criteria.id"
+                },
+                "vendor_id": {
+                    "$ref": "#/$defs/SerialID",
+                    "$comment": "FK -> Vendor.id"
+                },
+                "response_text": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "criteria_id",
+                "vendor_id",
+                "response_text"
+            ]
+        },
+        "Cost": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/SerialID"
+                },
+                "criteria_category_id": {
+                    "$ref": "#/$defs/SerialID",
+                    "$comment": "FK -> CriteriaCategory.id"
+                },
+                "vendor_id": {
+                    "$ref": "#/$defs/SerialID",
+                    "$comment": "FK -> Vendor.id"
+                },
+                "cost": {
+                    "$ref": "#/$defs/Money"
+                }
+            },
+            "required": [
+                "id",
+                "criteria_category_id",
+                "vendor_id",
+                "cost"
+            ]
+        }
+    }
+}

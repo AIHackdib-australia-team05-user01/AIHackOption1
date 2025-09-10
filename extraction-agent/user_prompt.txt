@@ -1,0 +1,6 @@
+Please get all the documents from storage and extract the relevant information according to the database schema and output the resulting transformation as JSON.
+PLEASE NOTE, do not summarise any of the data, do not delete any of the data of interest, it's important to ensure data integrity.
+Please don't add new fields to the schema.
+Please make sure you include all the criteria from the RFP.
+Please make sure the JSON is well formed
+Please fill out the output with all of the data, do not truncate.
