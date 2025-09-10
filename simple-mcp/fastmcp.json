@@ -6,7 +6,7 @@
     },
     "deployment": {
         "transport": "http",
-        "host": "20.28.170.141",
+        "host": "0.0.0.0",
         "port": 8002,
         "path": "/mcp",
         "log_level": "INFO"
