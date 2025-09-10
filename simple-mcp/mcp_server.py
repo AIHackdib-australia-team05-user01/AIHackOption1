@@ -1,10 +1,14 @@
 from fastapi import FastAPI, Request
 import sys
 import os
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
 from db_connect import DBConnect
 
 # Add the project root to the python path to allow importing db_connect
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Add simple-mcp to Python path
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from tools.mock_tool import mock_run
 from tools.pdf_extractor_tool import extract_pdf
