@@ -47,6 +47,7 @@ async def main() -> None:
     await Console(agent.run_stream(task=user_prompt))
     # Close the connection to the model client.
     await model_client.close()
+    await workbench.stop()
 
 
 # NOTE: if running this inside a Python script you'll need to use asyncio.run(main()).
