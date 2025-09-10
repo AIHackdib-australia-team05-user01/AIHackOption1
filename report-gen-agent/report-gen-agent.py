@@ -1,8 +1,12 @@
 import asyncio
+import os
 from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.ui import Console
 from autogen_ext.models.openai import AzureOpenAIChatCompletionClient
 from db_connect import DBConnect
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Define a model client. You can use other model client that implements
 # the `ChatCompletionClient` interface.
@@ -10,7 +14,7 @@ model_client = AzureOpenAIChatCompletionClient(
     model="gpt-5-chat",
     api_version="2025-01-01-preview",
     azure_endpoint="https://aihac-mfc0kjaa-eastus2.cognitiveservices.azure.com/",
-    api_key="API_KEY",
+    api_key=os.getenv("REPORT_GEN_API_KEY"),
     model_info={"vision":False,"function_calling":True,"json_output":True,"family":"gpt-5","structured_output":True,"multiple_system_messages":True}
 )
 
