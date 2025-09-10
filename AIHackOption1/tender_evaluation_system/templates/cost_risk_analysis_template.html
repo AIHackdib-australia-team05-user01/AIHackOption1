@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cost-Risk-Schedule Analysis</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .analysis-section { margin-bottom: 30px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Cost-Risk-Schedule Analysis</h1>
+    <p>Generated on: {{ generated_date }}</p>
+    
+    <div class="analysis-section">
+        <h2>Cost Analysis</h2>
+        <table>
+            <tr>
+                <th>Vendor</th>
+                <th>Cost Category</th>
+                <th>Amount</th>
+            </tr>
+            {% for vendor in vendors %}
+            {% for category, amount in vendor.costs.items() %}
+            <tr>
+                <td>{{ vendor.vendor_name }}</td>
+                <td>{{ category }}</td>
+                <td>${{ amount }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+    
+    <div class="analysis-section">
+        <h2>Risk Assessment</h2>
+        <p>Risk analysis would include detailed risk factors here.</p>
+    </div>
+    
+    <div class="analysis-section">
+        <h2>Schedule Analysis</h2>
+        <p>Schedule confidence analysis would be presented here.</p>
+    </div>
+</body>
+</html>

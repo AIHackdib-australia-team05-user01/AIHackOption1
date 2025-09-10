@@ -1,0 +1,8 @@
+psycopg2-binary
+jinja2
+pandas
+numpy
+matplotlib
+seaborn
+reportlab
+docxtpl

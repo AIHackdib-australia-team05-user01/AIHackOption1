@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .vendor { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>Generated on: {{ generated_date }}</p>
+    
+    <h2>Vendor Scoring Matrix</h2>
+    <table>
+        <tr>
+            <th>Vendor</th>
+            <th>Criteria Responses</th>
+            <th>Costs</th>
+            <th>Scores</th>
+        </tr>
+        {% for vendor in vendors %}
+        <tr>
+            <td class="vendor">{{ vendor.vendor_name }}</td>
+            <td>
+                <ul>
+                {% for key, value in vendor.criteria_responses.items() %}
+                    <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                {% for key, value in vendor.costs.items() %}
+                    <li>{{ key }}: ${{ value }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                {% for key, value in vendor.scores.items() %}
+                    <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
