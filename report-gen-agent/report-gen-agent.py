@@ -11,6 +11,7 @@ model_client = AzureOpenAIChatCompletionClient(
     api_version="2025-01-01-preview",
     azure_endpoint="https://aihac-mfc0kjaa-eastus2.cognitiveservices.azure.com/",
     api_key="API_KEY",
+    model_info={"vision":False,"function_calling":True,"json_output":True,"family":"gpt-5","structured_output":True,"multiple_system_messages":True}
 )
 
 db=DBConnect(True)
