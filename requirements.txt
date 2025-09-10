@@ -1,4 +1,7 @@
 openai~=1.60.2
 ansible-core~=2.17.0
 psycopg2.binary
-
+autogen-agentchat
+autogen-ext[openai]
+autogen-ext[azure]
+autogen-ext
