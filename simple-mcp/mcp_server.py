@@ -1,3 +1,4 @@
+from fastapi.responses import StreamingResponse
 from fastapi import FastAPI, Request
 import sys
 import os
@@ -22,6 +23,15 @@ except Exception as e:
     db = None
     print(f"Failed to connect to the database: {e}")
 
+
+@app.post("/tools/mock/stream")
+async def call_mock_tool_stream(request: Request):
+    params = await request.json()
+    def result_generator():
+        # Replace this with your actual generator logic
+        for chunk in mock_run(params):  # mock_run should yield strings
+            yield chunk + "\n"
+    return StreamingResponse(result_generator(), media_type="text/plain")
 
 @app.post("/tools/mock")
 async def call_mock_tool(request: Request):
