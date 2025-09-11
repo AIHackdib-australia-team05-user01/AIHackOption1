@@ -12,6 +12,7 @@ mcp = FastMCP("rfp-mcp")
 @mcp.tool
 def get_all_documents() -> str:
     """Gets all the rfp and executive summary documents from storage"""
+    print("Getting documents")
     vendor1_exec_summary = read_file_to_text("tender_docs/Vendor 1 Executive Summary.docx")
     vendor1_rfp = read_file_to_text("tender_docs/Vendor 1 RFP.xlsx")
     vendor2_exec_summary = read_file_to_text("tender_docs/Vendor 2 Executive Summary.docx")
@@ -29,6 +30,7 @@ def get_all_documents() -> str:
 
 @mcp.tool
 def get_schema() -> str:
+    print("Getting schema")
     """Gets the json schema that reflects what the database schema is"""
     with open("database.schema.json", "r", encoding="utf-8") as f:
         return f.read()
@@ -54,9 +56,12 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
     Returns:
       Counts per table inserted/updated (rows attempted).
     """
+    print("Storing RFP data")
     if isinstance(data, str):
         data = json.loads(data)
+        print("loaded data")
     if not isinstance(data, dict):
+        print("data is wrong")
         raise ValueError("`data` must be a dict or JSON string.")
 
     # Basic shape checks
