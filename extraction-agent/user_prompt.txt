@@ -1,1 +1,1 @@
-Please get all the documents from storage and extract the relevant information according to the database schema and output the resulting transformation as JSON and use the standard schema order as given.
+Please get all the documents from storage and extract the relevant information according to the database schema and output the resulting transformation as Python Dictionary and use the standard schema order as given.
