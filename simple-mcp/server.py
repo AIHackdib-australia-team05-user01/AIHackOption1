@@ -36,9 +36,9 @@ def get_schema() -> str:
         return f.read()
 
 @mcp.tool
-def load_rfp_json(data: Any) -> Dict[str, int]:
+def store_rfp_data(data: Any) -> Dict[str, int]:
     """
-    Store RFP extraction dict (or JSON string) into team5 Postgres database.
+    Store RFP extraction data (Python Dict or JSON string) into team5 Postgres database.
 
     Args:
       data: Python dict OR JSON string with keys:

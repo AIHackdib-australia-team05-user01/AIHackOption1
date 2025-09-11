@@ -101,6 +101,8 @@ agent = AssistantAgent(
 
 # Run the agent continuously taking user prompts from stdio until the user quits
 async def main():
+    tools = await workbench.list_tools()
+    print(f"Available tools from MCP Server: {[t['name'] for t in tools]}")
     try:
         while True:
             user_prompt = (await ainput("You> ")).strip()
