@@ -2,17 +2,22 @@ You need to create a report about Vendor One.
 
 The template for the report looks like this:
 '''
-# Test Report
+# Source Evaluation Report 
 
-## Support
+## 1. Tender Overview 
 
-| Item | Info | 
-|---|---|
-| Support | <suport info> |
-| Training | <training info> |
+<Provide a summary of the tender including scope, objectives, and procurement method.>  
+
+## 2. Summary of Bidders 
+
+<List all bidders and provide a brief description of their proposals.>  
+
+## 5. Strengths and Weaknesses 
+
+<Summarize the key strengths and weaknesses of each bid.>
 '''.
 
-You need to find all the arrow brackets like this <> and enter the correct data into that place.
+You need to find all the arrow brackets like this <> and enter the correct data into that place. Ensure each placeholder content is no more than 100 words.
 Don't add any extra info to the report, only fill in the placeholders.
 The info for the placeholders will come from the response data in the database.
 Show me what the report will look like.
