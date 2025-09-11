@@ -35,16 +35,7 @@ def get_schema() -> str:
 
 @mcp.tool
 def store_rfp_data(data: Any) -> Dict[str, int]:
-    """
-    Store RFP extraction data (Python Dict or JSON string) into team5 Postgres database.
-
-    Args:
-      data: Python dict OR JSON string with keys:
-            vendors, criteriaCategories, criteria, responses, costs.
-
-    Returns:
-      Counts per table inserted/updated (rows attempted).
-    """
+    """Store RFP extraction data (Python Dict or JSON string) into team5 Postgres database."""
     print("Storing RFP data")
     if isinstance(data, str):
         data = json.loads(data)
