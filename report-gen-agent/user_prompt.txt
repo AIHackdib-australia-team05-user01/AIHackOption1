@@ -16,5 +16,3 @@ You need to find all the arrow brackets like this <> and enter the correct data 
 Don't add any extra info to the report, only fill in the placeholders.
 The info for the placeholders will come from the response data in the database.
 Show me what the report will look like.
-
-Create a new file named 'support_report_vendor_one.md' and put the contents of your report in there.

@@ -1,8 +1,7 @@
 You need to create a report about Vendor One.
-You need to find all the arrow brackets like this <> and enter the correct data into that place.
-Tell me what the final report will look like.
 
-The template for the report looks like this
+The template for the report looks like this:
+'''
 # Test Report
 
 ## Support
@@ -11,4 +10,11 @@ The template for the report looks like this
 |---|---|
 | Support | <suport info> |
 | Training | <training info> |
+'''.
 
+You need to find all the arrow brackets like this <> and enter the correct data into that place.
+Don't add any extra info to the report, only fill in the placeholders.
+The info for the placeholders will come from the response data in the database.
+Show me what the report will look like.
+
+Create a new report in the output directory named 'support_report_vendor_one.md' and put the contents of your report in there.

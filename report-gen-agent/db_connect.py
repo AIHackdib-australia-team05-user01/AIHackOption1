@@ -1,4 +1,5 @@
 import psycopg2
+import os
 
 class DBConnect:
     def __init__(self, dummy = False):
@@ -63,6 +64,8 @@ class DBConnect:
 
 
 
+
+
 if __name__ == "__main__":
     db = DBConnect(True)
 
@@ -70,20 +73,22 @@ if __name__ == "__main__":
     for vendor in vendors:
         print(vendor)
 
-    criteria_categories = db.get_all_criteria_categories()
-    for criteria_category in criteria_categories:
-            print(criteria_category)
+    # criteria_categories = db.get_all_criteria_categories()
+    # for criteria_category in criteria_categories:
+    #         print(criteria_category)
 
-    criterias = db.get_all_criteria()
-    for criteria in criterias:
-        print(criteria)
+    # criterias = db.get_all_criteria()
+    # for criteria in criterias:
+    #     print(criteria)
 
-    responses = db.get_all_responses()
-    for response in responses:
-        print(response)
+    # responses = db.get_all_responses()
+    # for response in responses:
+    #     print(response)
 
-    costs = db.get_all_costs()
-    for cost in costs:
-        print(cost)
+    # costs = db.get_all_costs()
+    # for cost in costs:
+    #     print(cost)
+
+    create_report("test_report.md", "# Test Report\nThis is a test report.")
 
 
