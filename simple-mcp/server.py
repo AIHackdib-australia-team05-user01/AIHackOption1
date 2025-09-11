@@ -45,7 +45,7 @@ def _exec_values_upsert(cur, sql_prefix: str, rows: List[Tuple], template: str, 
 @mcp.tool
 def load_rfp_json(data: Any) -> Dict[str, int]:
     """
-    Load RFP extraction dict (or JSON string) into team5 Postgres.
+    Store RFP extraction dict (or JSON string) into team5 Postgres database.
 
     Args:
       data: Python dict OR JSON string with keys:
@@ -65,30 +65,38 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
     crit = data.get("criteria", [])
     resp = data.get("responses", [])
     costs = data.get("costs", [])
+    print("Checking data shape")
 
+    print("Connecting to Db . . .")
     db = DBConnect(dummy=False)
+    print("Connected to the Db")
     cnx = db.cnx
     cur = db.cursor
 
     # Wrap in a transaction
     try:
         # 1) vendors(id, name)
+        print("Creating vendors transaction")
         v_rows = [(int(x["id"]), str(x["name"])) for x in vendors]
         v_sql = "INSERT INTO vendors (id, name)"
         v_tpl = "(%s, %s)"
         v_suf = "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name"
         c_v = _exec_values_upsert(cur, v_sql, v_rows, v_tpl, v_suf)
+        print("Vendors transaction created")
 
         # 2) criteria_categories(id, name)
+        print("Creating criteria categories transaction")
         ccat_rows = [(int(x["id"]), str(x["name"])) for x in cats]
         ccat_sql = "INSERT INTO criteria_categories (id, name)"
         ccat_tpl = "(%s, %s)"
         ccat_suf = "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name"
         c_ccat = _exec_values_upsert(
             cur, ccat_sql, ccat_rows, ccat_tpl, ccat_suf)
+        print("Criteria Categories transaction created")
 
         # 3) criteria(id, criteria_categories_id, name, goal, weight)
         # input uses `category_id` -> FK column is criteria_categories_id
+        print("Creating criteria transaction")
         crit_rows = [
             (
                 int(x["id"]),
@@ -108,8 +116,10 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         weight=EXCLUDED.weight"""
         c_crit = _exec_values_upsert(
             cur, crit_sql, crit_rows, crit_tpl, crit_suf)
+        print("Criteria transaction created")
 
         # 4) responses(id, criteria_id, vendors_id, response_text)
+        print("Creating responses transaction")
         resp_rows = [
             (
                 int(x["id"]),
@@ -127,9 +137,11 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         response_text=EXCLUDED.response_text"""
         c_resp = _exec_values_upsert(
             cur, resp_sql, resp_rows, resp_tpl, resp_suf)
+        print("Responses transaction created")
 
         # 5) costs(id, criteria_categories_id, vendors_id, cost)
         # input uses `criteria_category_id` -> FK column is criteria_categories_id
+        print("Creating costs transaction")
         cost_rows = [
             (
                 int(x["id"]),
@@ -147,8 +159,10 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         cost=EXCLUDED.cost"""
         c_cost = _exec_values_upsert(
             cur, cost_sql, cost_rows, cost_tpl, cost_suf)
+        print("Costs transaction created")
 
         cnx.commit()
+        print("Transactions committed")
         return {
             "vendors": c_v,
             "criteria_categories": c_ccat,
