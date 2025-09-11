@@ -1,11 +1,11 @@
 # server.py
 from fastmcp import FastMCP
 import json
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 from db_connect import DBConnect
 import psycopg2
-import psycopg2.extras as extras
 from tools.text_to_string import read_file_to_text
+from tools.utils import exec_values_upsert
 
 mcp = FastMCP("rfp-mcp")
 
@@ -34,15 +34,6 @@ def get_schema() -> str:
     """Gets the json schema that reflects what the database schema is"""
     with open("database.schema.json", "r", encoding="utf-8") as f:
         return f.read()
-
-
-def _exec_values_upsert(cur, sql_prefix: str, rows: List[Tuple], template: str, suffix: str = ""):
-    if not rows:
-        return 0
-    sql = sql_prefix + " VALUES %s " + suffix
-    extras.execute_values(cur, sql, rows, template=template)
-    return len(rows)
-
 
 @mcp.tool
 def load_rfp_json(data: Any) -> Dict[str, int]:
@@ -86,7 +77,7 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
         v_sql = "INSERT INTO vendors (id, name)"
         v_tpl = "(%s, %s)"
         v_suf = "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name"
-        c_v = _exec_values_upsert(cur, v_sql, v_rows, v_tpl, v_suf)
+        c_v = exec_values_upsert(cur, v_sql, v_rows, v_tpl, v_suf)
         print("Vendors transaction created")
 
         # 2) criteria_categories(id, name)
@@ -95,7 +86,7 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
         ccat_sql = "INSERT INTO criteria_categories (id, name)"
         ccat_tpl = "(%s, %s)"
         ccat_suf = "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name"
-        c_ccat = _exec_values_upsert(
+        c_ccat = exec_values_upsert(
             cur, ccat_sql, ccat_rows, ccat_tpl, ccat_suf)
         print("Criteria Categories transaction created")
 
@@ -119,7 +110,7 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         name=EXCLUDED.name,
                         goal=EXCLUDED.goal,
                         weight=EXCLUDED.weight"""
-        c_crit = _exec_values_upsert(
+        c_crit = exec_values_upsert(
             cur, crit_sql, crit_rows, crit_tpl, crit_suf)
         print("Criteria transaction created")
 
@@ -140,7 +131,7 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         criteria_id=EXCLUDED.criteria_id,
                         vendors_id=EXCLUDED.vendors_id,
                         response_text=EXCLUDED.response_text"""
-        c_resp = _exec_values_upsert(
+        c_resp = exec_values_upsert(
             cur, resp_sql, resp_rows, resp_tpl, resp_suf)
         print("Responses transaction created")
 
@@ -162,7 +153,7 @@ def load_rfp_json(data: Any) -> Dict[str, int]:
                         criteria_categories_id=EXCLUDED.criteria_categories_id,
                         vendors_id=EXCLUDED.vendors_id,
                         cost=EXCLUDED.cost"""
-        c_cost = _exec_values_upsert(
+        c_cost = exec_values_upsert(
             cur, cost_sql, cost_rows, cost_tpl, cost_suf)
         print("Costs transaction created")
 
