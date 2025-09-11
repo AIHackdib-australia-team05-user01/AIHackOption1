@@ -17,15 +17,13 @@ def get_all_documents() -> str:
     vendor1_rfp = read_file_to_text("tender_docs/Vendor 1 RFP.xlsx")
     vendor2_exec_summary = read_file_to_text("tender_docs/Vendor 2 Executive Summary.docx")
     vendor2_rfp = read_file_to_text("tender_docs/Vendor 2 RFP.xlsx")
-    vendor3_exec_summary = read_file_to_text("tender_docs/Vendor 3 Executive Summary.docx")
-    vendor3_rfp = read_file_to_text("tender_docs/Vendor 3 RFP.xlsx")
+    #vendor3_exec_summary = read_file_to_text("tender_docs/Vendor 3 Executive Summary.docx")
+    #vendor3_rfp = read_file_to_text("tender_docs/Vendor 3 RFP.xlsx")
     
     return f"""The executive summary for vendor 1 is: {vendor1_exec_summary}
     The RFP for vendor 1 is: {vendor1_rfp}
     The executive summary for vendor 2 is: {vendor2_exec_summary}
     The RFP for vendor 2 is: {vendor2_rfp}
-    The executive summary for vendor 3 is: {vendor3_exec_summary}
-    The RFP for vendor 3 is: {vendor3_rfp}
     """
 
 @mcp.tool

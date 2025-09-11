@@ -1,1 +1,1 @@
-Please get all the documents from storage and extract the relevant information according to the database schema and output the resulting transformation as Python Dictionary and use the standard schema order as given and store the result in the database.
+Please get all the documents from storage and extract the relevant information according to the database schema and output the resulting transformation as Python Dictionary and use the standard schema order as given and use the store_rfp_data tool to store the result in the database.
