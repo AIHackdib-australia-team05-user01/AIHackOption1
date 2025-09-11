@@ -1,0 +1,14 @@
+You need to create a report about Vendor One.
+You need to find all the arrow brackets like this <> and enter the correct data into that place.
+Tell me what the final report will look like.
+
+The template for the report looks like this
+# Test Report
+
+## Cost
+
+| Item | Cost | 
+|---|---|
+| Support | <suport cost> |
+| Training | <training cost> |
+

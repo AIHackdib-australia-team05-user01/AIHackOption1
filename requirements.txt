@@ -6,3 +6,4 @@ autogen-ext[openai]
 autogen-ext[azure]
 autogen-ext
 tiktoken
+dotenv

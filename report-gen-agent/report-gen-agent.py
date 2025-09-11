@@ -14,7 +14,7 @@ model_client = AzureOpenAIChatCompletionClient(
     model="gpt-5-chat",
     api_version="2025-01-01-preview",
     azure_endpoint="https://aihac-mfc0kjaa-eastus2.cognitiveservices.azure.com/",
-    api_key=os.getenv("REPORT_GEN_API_KEY"),
+    api_key="<KEY_HERE>",
     model_info={"vision":False,"function_calling":True,"json_output":True,"family":"gpt-5","structured_output":True,"multiple_system_messages":True}
 )
 
@@ -40,6 +40,22 @@ async def get_all_costs() -> dict:
     """A tool function to get all costs from the database."""
     return db.get_all_costs()
 
+async def create_file(filename: str) -> None:
+    """A tool to create a new file in the output directory"""
+    output_dir = "output"
+    file_path = os.path.join(output_dir, filename)
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write("")  # Creates an empty file
+    return None
+
+async def write_to_file(filename: str, content: str) -> None:
+    """A tool to write content to a file in the output directory"""
+    output_dir = "output"
+    file_path = os.path.join(output_dir, filename)
+    with open(file_path, "a", encoding="utf-8") as f:
+        f.write(content + "\n")  # Appends content to the file
+    return None
+
 
 # Define an AssistantAgent with the model, tool, system message, and reflection enabled.
 # The system message instructs the agent via natural language.
@@ -54,7 +70,7 @@ f.close()
 agent = AssistantAgent(
     name="report_gen_agent",
     model_client=model_client,
-    tools=[get_all_vendors, get_all_criteria_categories, get_all_criteria, get_all_responses, get_all_costs],
+    tools=[get_all_vendors, get_all_criteria_categories, get_all_criteria, get_all_responses, get_all_costs, create_file, write_to_file],
     system_message=system_prompt,
     reflect_on_tool_use=True,
     model_client_stream=True,  # Enable streaming tokens from the model client.
